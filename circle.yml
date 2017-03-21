@@ -9,6 +9,10 @@ dependencies:
   override:
     - ./scripts/build.sh $CIRCLE_BUILD_NUM
 
+test:
+  override:
+    - echo "No tests for this repo"
+
 deployment:
   hub:
     branch: master
