@@ -1,0 +1,17 @@
+machine:
+  services:
+    - docker
+
+  environment:
+    GO_REPOPATH: "$HOME/.go_project/src/github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
+
+dependencies:
+  override:
+    - ./scripts/build.sh $CIRCLE_BUILD_NUM
+
+deployment:
+  hub:
+    branch: master
+    commands:
+      - docker login -u "$DOCKER_USER" -p "$DOCKER_PASS" -e "$DOCKER_EMAIL"
+      - ./scripts/publish.sh $CIRCLE_BUILD_NUM

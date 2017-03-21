@@ -1,5 +1,5 @@
 build:
-	@go build .
+	@go build -o $OUT_DIR/$APP --ldflags "-linkmode external -extldflags '-static'"
 
 install:
 	@go install .

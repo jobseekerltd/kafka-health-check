@@ -1,0 +1,25 @@
+# APP BUILDER IMAGE
+# This tests and builds golang apps.
+
+# Usage:
+# docker build --rm=false --build-arg APP=your-app-name --build-arg VERSION=1.0.0 -f Dockerfile.build -t builder-image .
+
+# Output:
+# build/test-output.log - Verbose go test output to be interpreted
+# build/your-app-name   - Application binary file
+
+FROM jobseeker/go-builder
+
+RUN apk --no-cache add git
+
+ARG APP
+ENV SOURCE_DIR $GOPATH/src/github.com/jobseekerltd/$APP
+ENV OUT_DIR /build
+
+RUN mkdir $OUT_DIR
+COPY . $SOURCE_DIR
+WORKDIR $SOURCE_DIR
+
+RUN go build -o $OUT_DIR/$APP --ldflags "-linkmode external -extldflags '-static'"
+
+CMD ["sh"]
