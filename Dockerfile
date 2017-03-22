@@ -12,4 +12,4 @@ ARG APP
 
 ADD ./build/$APP /go-app
 
-CMD ["/go-app"]
+ENTRYPOINT ["/go-app"]
